@@ -1,9 +1,9 @@
 <script setup>
-definePageMeta({
-  layout: 'user'
-})
+
 </script>
 
 <template>
-    <h1>The user dashboard page</h1>
+  <div>
+    user dashboard showing
+  </div>
 </template>
