@@ -1,9 +1,20 @@
-<script setup></script>
+<script setup>
+const props = defineProps({
+  width: {
+    type: String,
+    default: "800px",
+  },
+  height: {
+    type: String,
+    default: "800px",
+  },
+});
+</script>
 
 <template>
   <svg
-    width="800px"
-    height="800px"
+    :width="width"
+    :height="height"
     viewBox="0 0 64 64"
     xmlns="http://www.w3.org/2000/svg"
   >

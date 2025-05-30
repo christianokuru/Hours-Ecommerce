@@ -54,11 +54,12 @@ const data = {
       title: "Products",
       url: "/dashboard/admin/products",
       icon: ShoppingCart,
+      isActive: true,
       showChevron: true,
       items: [
         {
           title: "Add Product",
-          url: "#",
+          url: "/dashboard/admin/products",
         },
         {
           title: "Edit Product",

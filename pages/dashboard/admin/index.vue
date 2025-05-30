@@ -20,8 +20,9 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { useRouter } from "vue-router";
+import AreaGraphComponent from "~/components/custom/dashboard/AreaGraphComponent.vue";
 
-const router = useRouter();
+const route = useRouter();
 
 definePageMeta({
   layout: "admin",
@@ -43,19 +44,79 @@ definePageMeta({
             </breadcrumb-item>
             <breadcrumb-separator class="hidden md:block" />
             <breadcrumb-item>
-              <breadcrumb-page>{{ router.currentRoute.value.name || "Admin Dashboard" }}</breadcrumb-page>
+              <breadcrumb-page>{{
+                route.currentRoute.value.name || "Admin Dashboard"
+              }}</breadcrumb-page>
             </breadcrumb-item>
           </breadcrumb-list>
         </breadcrumb>
       </div>
     </header>
     <div class="flex flex-1 flex-col gap-4 p-4 pt-0">
-      <div class="grid auto-rows-min gap-4 md:grid-cols-3">
-        <div class="aspect-video rounded-xl bg-muted/90" />
-        <div class="aspect-video rounded-xl bg-muted/90" />
-        <div class="aspect-video rounded-xl bg-muted/90" />
+      <div class="grid auto-rows-min gap-4 md:grid-cols-4">
+        <div
+          class="apect-video rounded-xl bg-card text-card-foreground shadow space-y-1 border"
+        >
+          <div
+            class="gap-y-1.5 p-6 flex flex-row items-center justify-between space-y-0 pb-2"
+          >
+            <h1 class="tracking-tight text-sm font-medium">Total Sales</h1>
+          </div>
+          <div class="p-6 pt-0">
+            <h2 class="text-4xl font-bold text-black">
+              $12🥲<span class="text-sm text-black font-light"> /month</span>
+            </h2>
+          </div>
+        </div>
+        <div
+          class="apect-video rounded-xl bg-card text-card-foreground shadow space-y-1 border"
+        >
+          <div
+            class="gap-y-1.5 p-6 flex flex-row items-center justify-between space-y-0 pb-2"
+          >
+            <h1 class="tracking-tight text-sm font-medium">Orders</h1>
+          </div>
+          <div class="p-6 pt-0">
+            <h2 class="text-4xl font-bold text-lime-600">
+              2<span class="text-sm text-black font-light"> /month</span>
+            </h2>
+          </div>
+        </div>
+        <div
+          class="apect-video rounded-xl bg-card text-card-foreground shadow space-y-1 border"
+        >
+          <div
+            class="gap-y-1.5 p-6 flex flex-row items-center justify-between space-y-0 pb-2"
+          >
+            <h1 class="tracking-tight text-sm font-medium">Top Product</h1>
+          </div>
+          <div class="p-6 pt-0">
+            <h2 class="text-4xl font-bold text-black">Sweat Pants</h2>
+          </div>
+        </div>
+        <div
+          class="apect-video rounded-xl bg-card text-card-foreground shadow space-y-1 border"
+        >
+          <div
+            class="gap-y-1.5 p-6 flex flex-row items-center justify-between space-y-0 pb-2"
+          >
+            <h1 class="tracking-tight text-sm font-medium">New Customers</h1>
+          </div>
+          <div class="p-6 pt-0">
+            <h2 class="text-4xl font-bold text-black">
+              10<span class="text-sm text-black font-light"> /month</span>
+            </h2>
+          </div>
+        </div>
       </div>
-      <div class="min-h-[100vh] flex-1 rounded-xl bg-muted/80 md:min-h-min" />
+      <div class="min-h-[100vh] flex-1 rounded-xl bg-muted/8 md:min-h-min">
+        <div class="grid auto-rows-min gap-4 md:grid-cols-6">
+          <div class=" rounded-xl border col-span-3">
+            <area-graph-component class="flex-grow"/>
+          </div>
+          <div class="aspect-video rounded-xl bg-muted/90 col-span-3" > </div>
+        </div>
+      </div>
     </div>
   </sidebar-inset>
 </template>
