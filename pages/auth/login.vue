@@ -1,77 +1,63 @@
 <script setup lang="ts">
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import loginImg from "@/assets/images/loginImg.png";
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import { toast } from "vue-sonner";
-import { Loader2 } from "lucide-vue-next";
-import { z } from "zod";
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import loginImg from "@/assets/images/loginImg.png"
+import { ref } from "vue"
+import { useRouter } from "vue-router"
+import { toast } from "vue-sonner"
+import { Loader2 } from "lucide-vue-next"
+import { z } from "zod"
+import { useZodForm } from "@/composables/useZodForm"
 
-// 💾 Form state
-const email = ref("okuruchristian@gmail.com");
-const password = ref("");
-const isLoading = ref(false);
-
-const router = useRouter();
-
-// ✅ Zod Schema
+// ✅ Schema
 const loginSchema = z.object({
   email: z.string().email({ message: "Invalid email format" }),
-  password: z
-    .string()
-    .min(6, { message: "Password must be at least 6 characters" }),
-});
+  password: z.string().min(6, { message: "Password must be at least 6 characters" }),
+})
+
+// ✨ Use the composable
+const { values, errors, isValid, validate } = useZodForm(loginSchema, {
+  email: "okuruchristian@gmail.com",
+  password: "",
+})
+
+const isLoading = ref(false)
+const router = useRouter()
 
 const handleLogin = async () => {
-  const formData = {
-    email: email.value,
-    password: password.value,
-  };
+  const isOkay = validate()
 
-  // ✅ Validate first
-  const result = loginSchema.safeParse(formData);
-
-  if (!result.success) {
-    const issues = result.error.format();
-
-    // Just show the first error as toast for now
-    const firstError =
-      issues.email?._errors[0] ||
-      issues.password?._errors[0] ||
-      "Invalid credentials";
-
-    toast.error(firstError);
-    return;
+  if (!isOkay) {
+    toast.error(errors.value.email || errors.value.password || "Invalid credentials")
+    return
   }
 
-  // 🎉 Simulate login
-  isLoading.value = true;
+  isLoading.value = true
 
   try {
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    await new Promise((resolve) => setTimeout(resolve, 3000))
 
     if (
-      email.value === "okuruchristian@gmail.com" &&
-      password.value === "qwerty"
+      values.value.email === "okuruchristian@gmail.com" &&
+      values.value.password === "qwerty"
     ) {
       toast.success("Login successful 🎉", {
-        description: `Welcome, ${email.value}!`,
-      });
+        description: `Welcome, ${values.value.email}!`,
+      })
 
       setTimeout(() => {
-        router.push("/dashboard/users");
-      }, 2000);
+        router.push("/dashboard/users")
+      }, 2000)
     } else {
-      throw new Error("Invalid email or password");
+      throw new Error("Invalid email or password")
     }
   } catch (error: any) {
-    toast.error(error.message || "Login failed 😓");
+    toast.error(error.message || "Login failed 😓")
   } finally {
-    isLoading.value = false;
+    isLoading.value = false
   }
-};
+}
 </script>
 
 <template>
@@ -88,18 +74,23 @@ const handleLogin = async () => {
 
         <!-- Form -->
         <form @submit.prevent="handleLogin" class="grid gap-4">
-          <div class="grid gap-3 max-sm:mb-4">
-            <Label for="email">Email <span class="text-red-500">*</span></Label>
+          <div class="grid gap-1 max-sm:mb-2">
+            <Label for="email">
+              Email <span class="text-red-500">*</span>
+            </Label>
             <Input
               id="email"
-              v-model="email"
+              v-model="values.email"
               type="email"
               placeholder="m@example.com"
               required
             />
+            <p v-if="errors.email" class="text-sm text-red-500 mt-1">
+              {{ errors.email }}
+            </p>
           </div>
 
-          <div class="grid gap-2">
+          <div class="grid gap-1">
             <div class="flex items-center">
               <Label for="password">Password <span class="text-red-500">*</span></Label>
               <NuxtLink
@@ -109,26 +100,30 @@ const handleLogin = async () => {
                 Forgot your password?
               </NuxtLink>
             </div>
-            <Input id="password" v-model="password" type="password" required />
+            <Input
+              id="password"
+              v-model="values.password"
+              type="password"
+              required
+            />
+            <p v-if="errors.password" class="text-sm text-red-500 mt-1">
+              {{ errors.password }}
+            </p>
           </div>
 
           <Button
             type="submit"
             class="w-full flex items-center justify-center gap-2"
-            :disabled="isLoading"
+            :disabled="isLoading || !isValid"
           >
             <Loader2 v-if="isLoading" class="w-4 h-4 animate-spin" />
             <span v-if="!isLoading">Login</span>
           </Button>
-          <!-- 
-          <Button variant="outline" class="w-full">
-            Login with Google
-          </Button> -->
         </form>
 
         <div class="mt-4 text-center text-sm">
           Don't have an account?
-          <NuxtLink to="/auth/register" class="underline"> Sign up </NuxtLink>
+          <NuxtLink to="/auth/register" class="underline">Sign up</NuxtLink>
         </div>
       </div>
     </div>
