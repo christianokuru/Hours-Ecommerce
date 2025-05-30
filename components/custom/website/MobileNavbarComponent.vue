@@ -50,7 +50,7 @@ const links = [
           </nuxt-link>
         </SheetTitle>
       </SheetHeader>
-      <div class="flex flex-col items-center justify-center space-y-4 mt-5">
+      <div class="flex flex-col items-center justify-center space-y-4 mt-5 mb-24">
           <nuxt-link
             v-for="item in links"
             :key="item.name"
