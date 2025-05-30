@@ -123,7 +123,7 @@ const handleLogin = async () => {
 
         <div class="mt-4 text-center text-sm">
           Don't have an account?
-          <NuxtLink to="/auth/register" class="underline">Sign up</NuxtLink>
+          <NuxtLink to="/auth/registeration" class="underline">Sign up</NuxtLink>
         </div>
       </div>
     </div>

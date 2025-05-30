@@ -3,17 +3,11 @@ import { useRoute } from "vue-router";
 import Cart from "@/assets/icons/cart.vue";
 import DarkModeComponent from "@/components/custom/website/DarkModeComponent.vue";
 import MobileNavbarComponent from "@/components/custom/website/MobileNavbarComponent.vue";
+import { links } from '@/lib/navlinks.js'
 import logo from "@/assets/icons/logo.vue";
 
 const route = useRoute();
 
-const links = [
-  { name: "Home", path: "/" },
-  { name: "Products", path: "/products" },
-  { name: "Categories", path: "/categories" },
-  { name: "About Us", path: "/about" },
-  { name: "Contact", path: "/contact" },
-];
 </script>
 
 <template>

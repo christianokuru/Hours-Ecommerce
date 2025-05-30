@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
@@ -15,17 +12,10 @@ import {
 import Hamburger from '@/assets/icons/Hamburger.vue'
 import { useRoute } from "vue-router";
 import logo from "@/assets/icons/logo.vue";
+import { links } from '@/lib/navlinks.js'
 
 
 const route = useRoute();
-
-const links = [
-  { name: "Home", path: "/" },
-  { name: "Products", path: "/products" },
-  { name: "Categories", path: "/categories" },
-  { name: "About Us", path: "/about" },
-  { name: "Contact", path: "/contact" },
-];
 </script>
 
 <template>
