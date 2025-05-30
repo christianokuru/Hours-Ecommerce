@@ -6,44 +6,64 @@ import loginImg from '@/assets/images/loginImg.png'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { toast } from 'vue-sonner'
-import { Loader2 } from 'lucide-vue-next' // ✅ New import
+import { Loader2 } from 'lucide-vue-next'
+import { z } from 'zod' // 🔥 Import Zod
 
+// 💾 Form state
 const email = ref('okuruchristian@gmail.com')
 const password = ref('')
 const isLoading = ref(false)
 
 const router = useRouter()
 
+// ✅ Zod Schema
+const loginSchema = z.object({
+  email: z.string().email({ message: 'Invalid email format' }),
+  password: z.string().min(6, { message: 'Password must be at least 6 characters' }),
+})
+
 const handleLogin = async () => {
+  const formData = {
+    email: email.value,
+    password: password.value,
+  }
+
+  // ✅ Validate first
+  const result = loginSchema.safeParse(formData)
+
+  if (!result.success) {
+    const issues = result.error.format()
+
+    // Just show the first error as toast for now
+    const firstError = issues.email?._errors[0] || issues.password?._errors[0] || 'Invalid credentials'
+
+    toast.error(firstError)
+    return
+  }
+
+  // 🎉 Simulate login
   isLoading.value = true
 
   try {
     await new Promise((resolve) => setTimeout(resolve, 3000))
 
     if (email.value === 'okuruchristian@gmail.com' && password.value === 'qwerty') {
-      // Show success toast BEFORE navigation
       toast.success('Login successful 🎉', {
-        description: 'Redirecting to dashboard...',
-        // duration: 2000, // 2 seconds
+        description: `Welcome, ${email.value}!`,
       })
 
-      // Wait for 2 seconds so the toast can be seen
       setTimeout(() => {
         router.push('/dashboard/users')
       }, 2000)
-
     } else {
       throw new Error('Invalid email or password')
     }
   } catch (error: any) {
-    toast.error(error.message || 'Login failed 😓', {
-      duration: 3000,
-    })
+    toast.error(error.message || 'Login failed 😓')
   } finally {
     isLoading.value = false
   }
 }
-
 </script>
 
 
