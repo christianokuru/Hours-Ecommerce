@@ -1,17 +1,33 @@
 <script setup>
-import { useRoute } from "vue-router";
-import Cart from "@/assets/icons/cart.vue";
-import DarkModeComponent from "@/components/custom/website/DarkModeComponent.vue";
-import MobileNavbarComponent from "@/components/custom/website/MobileNavbarComponent.vue";
+import { ref, onMounted, onUnmounted } from 'vue'
+import { useRoute } from "vue-router"
+import Cart from "@/assets/icons/cart.vue"
+import DarkModeComponent from "@/components/custom/website/DarkModeComponent.vue"
+import MobileNavbarComponent from "@/components/custom/website/MobileNavbarComponent.vue"
 import { links } from '@/lib/navlinks.js'
-import logo from "@/assets/icons/logo.vue";
+import logo from "@/assets/icons/logo.vue"
 
-const route = useRoute();
+const route = useRoute()
+const isScrolled = ref(false)
 
+const handleScroll = () => {
+  isScrolled.value = window.scrollY > 20
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
 </script>
 
 <template>
-  <div id="webcrumbs" class="bg-background border-b">
+  <div
+    class="top-0 left-0 w-full z-50 fixed transition-all duration-1000 ease-in-out"
+    :class="isScrolled ? 'backdrop-blur-xl bg-background/30' : 'backdrop-blur-none bg-transparent'"
+  >
     <div class="max-w-[1280px] mx-auto p-4">
       <nav class="flex items-center justify-between">
         <!-- Logo -->
@@ -27,7 +43,7 @@ const route = useRoute();
             :to="item.path"
             class="relative group py-2 transition-colors"
             :class="{
-              'text-primary font-[600]': route.path === item.path,
+              'text-primary-foreground font-[700] text-lg': route.path === item.path,
               'hover:text-primary': route.path !== item.path,
             }"
           >

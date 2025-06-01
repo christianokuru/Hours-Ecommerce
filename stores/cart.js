@@ -1,54 +1,76 @@
+// stores/cart.js
+import { defineStore } from 'pinia'
+import { useStorage } from '@vueuse/core'
 
-import { defineStore } from "pinia";
-import { ref } from "vue";
+export const useCartStore = defineStore('cart', () => {
+  // Persist cart in localStorage
+  const cart = useStorage('cart-items', [])
 
-export const useCartStore = defineStore(
-  "cart",
-  () => {
-    const cart = ref([]);
+  // Add a product to cart
+  function addToCart(product) {
+    const existing = cart.value.find(item => item.id === product.id)
 
-    // Add item to cart
-    const addToCart = (product) => {
-      const existingItem = cart.value.find((item) => item.id === product.id);
-      if (existingItem) {
-        existingItem.quantity++;
-      } else {
-        cart.value.push({ ...product, quantity: 1 });
-      }
-    };
+    if (existing) {
+      if (existing.quantity < 10) existing.quantity++
+    } else {
+      cart.value.push({
+        ...product,
+        quantity: 1,
+      })
+    }
+  }
 
-    // Increase quantity
-    const increaseQuantity = (productId) => {
-      const item = cart.value.find((item) => item.id === productId);
-      if (item) {
-        item.quantity++;
-      }
-    };
+  // Remove a product
+  function removeFromCart(productId) {
+    cart.value = cart.value.filter(item => item.id !== productId)
+  }
 
-    // Decrease quantity
-    const decreaseQuantity = (productId) => {
-      const item = cart.value.find((item) => item.id === productId);
-      if (item) {
-        item.quantity--;
-        if (item.quantity <= 0) {
-          cart.value = cart.value.filter((item) => item.id !== productId);
-        }
-      }
-    };
+  // Clear cart
+  function clearCart() {
+    cart.value = []
+  }
 
-    // Remove item completely
-    const removeFromCart = (productId) => {
-      cart.value = cart.value.filter((item) => item.id !== productId);
-    };
+  // Check if item is in cart
+  function isInCart(productId) {
+    return cart.value.some(item => item.id === productId)
+  }
 
-    // Calculate subtotal
-    const cartTotal = () => {
-      return cart.value.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    };
+  // Get total number of items
+  const totalItems = computed(() =>
+    cart.value.reduce((total, item) => total + item.quantity, 0)
+  )
 
-    return { cart, addToCart, increaseQuantity, decreaseQuantity, removeFromCart, cartTotal };
+  // Total without discount
+  const rawTotal = computed(() =>
+    cart.value.reduce((total, item) => total + item.quantity * item.price, 0)
+  )
+
+  // Discount (e.g., 10% off if total > $100)
+  const discount = computed(() => (rawTotal.value > 100 ? 0.1 : 0))
+
+  // Total with discount
+  const totalPrice = computed(() =>
+    rawTotal.value * (1 - discount.value)
+  )
+
+  // Subtotal for each item
+  function getItemSubtotal(item) {
+    return item.quantity * item.price
+  }
+
+  return {
+    cart,
+    addToCart,
+    removeFromCart,
+    clearCart,
+    isInCart,
+    totalItems,
+    totalPrice,
+    rawTotal,
+    discount,
+    getItemSubtotal,
   },
   {
     persist: true, // Enables persistence
   }
-);
+})
