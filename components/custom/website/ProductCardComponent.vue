@@ -1,10 +1,26 @@
 <script setup>
-defineProps({
+import { toast } from "vue-sonner"
+
+const props = defineProps({
   product: {
     type: Object,
     required: true,
   },
+  onAddToCart: {
+    type: Function,
+    required: true,
+  },
 });
+
+const handleAddToCart = () => {
+  console.log("Product added to cart:", props.product);
+  props.onAddToCart(); 
+  toast.success(`Product added to cart 🎉`, {
+    description: `${props.product.name} has been added to your cart.`,
+  });
+};
+
+
 </script>
 
 <template>
@@ -80,6 +96,7 @@ defineProps({
       <!-- Button -->
       <button
         :disabled="!product.inStock"
+        @click="handleAddToCart"
         class="mt-4 px-4 py-2 bg-primary text-primary-foreground font-semibold rounded-full hover:bg-primary/90 transition"
       >
         {{ product.inStock ? "Add to Cart" : "Out of Stock" }}

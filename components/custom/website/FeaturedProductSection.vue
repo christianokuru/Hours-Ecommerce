@@ -2,6 +2,15 @@
 import ProductCardComponent from "@/components/custom/website/ProductCardComponent.vue";
 import StepperComponent from "@/components/custom/website/StepperComponent.vue";
 import { products } from "~/lib/products";
+import { useCartStore } from "@/stores/cart";
+
+const cartStore = useCartStore();
+
+// ✅ Define this function
+const addToCart = (product) => {
+  console.log(cartStore)
+  cartStore.addToCart(product);
+};
 </script>
 
 <template>
@@ -13,11 +22,13 @@ import { products } from "~/lib/products";
         <nuxt-link :to="{ name: 'products' }">View All</nuxt-link>
       </ui-button>
     </div>
+
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-sm:grid-cols-1">
       <product-card-component
         v-for="product in products.slice(0, 3)"
         :key="product.id"
         :product="product"
+        :on-add-to-cart="() => addToCart(product)"
       />
     </div>
   </div>
