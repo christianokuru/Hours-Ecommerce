@@ -78,7 +78,7 @@ const proceedToCheckout = () => {
         </div>
       </SheetTrigger>
 
-      <SheetContent class="w-80 bg-background">
+      <SheetContent side="top" class="w-80 bg-background">
         <h2 class="text-xl font-semibold text-black dark:text-white">Your Cart</h2>
 
         <div
@@ -173,10 +173,10 @@ const proceedToCheckout = () => {
             class="mx-auto"
           /> -->
           <Cart height="200" width="300" />
-          <p class="mt-4 text-lg font-semibold text-primary-foreground dark:text-gray-400">
+          <p class="mt-4 text-lg font-semibold text-primary dark:text-gray-400">
             Omo, your cart is empty 🛒
           </p>
-          <p class="text-sm text-primary-foreground dark:text-gray-400 mt-3">
+          <p class="text-sm text-primary dark:text-gray-400 mt-3">
             Add items to your cart to continue shopping joor!! 🤣🤣🤣 
           </p>
         </div>

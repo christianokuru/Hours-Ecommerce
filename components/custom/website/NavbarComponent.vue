@@ -56,7 +56,7 @@ onUnmounted(() => {
         <!-- Buttons -->
         <div class="hidden md:flex items-center space-x-5">
           <button
-            class="mr-5 hover:text-primary-foreground transition-colors flex items-center"
+            class="mr-5 hover:text-primary transition-colors flex items-center"
           >
             <cart-component />
           </button>

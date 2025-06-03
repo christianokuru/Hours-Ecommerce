@@ -9,7 +9,7 @@ defineProps({
 
 <template>
   <div
-    class="bg-white dark:bg-background border-border shadow-lg p-4 max-sm:p-0 flex flex-col"
+    class="bg-white dark:bg-background border border-border rounded-2xl shadow-lg p-4 max-sm:p-0 flex flex-col"
     :class="{ 'opacity-50 cursor-not-allowed': !product.inStock }"
   >
     <!-- Product Image -->
@@ -36,7 +36,7 @@ defineProps({
     </div>
 
     <!-- Product Details -->
-    <div class="flex flex-col gap-2">
+    <div class="flex flex-col gap-2 max-sm:px-4 max-sm:pb-4">
       <h2 class="text-lg font-semibold text-gray-800 dark:text-white">
         {{ product.name }}
       </h2>
@@ -71,7 +71,7 @@ defineProps({
         <span
           v-for="size in product.sizes"
           :key="size"
-          class="border border-gray-300 dark:border-gray-600 px-2 py-1 text-sm rounded"
+          class="border border-destructive/30 dark:border-red-300 px-2 py-1 text-sm rounded"
         >
           {{ size }}
         </span>
