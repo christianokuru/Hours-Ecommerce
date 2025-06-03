@@ -5,6 +5,7 @@ import Cart from "@/assets/icons/cart.vue";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import emptyCart from "@/public/images/empty-cart.jpg";
 
 // Access cart store
 const cartStore = useCartStore();
@@ -52,12 +53,14 @@ const proceedToCheckout = () => {
   }, 1500);
 };
 
-{/* <Badge
+{
+  /* <Badge
             v-if="cartCount > 0"
             class="absolute -top-2 -right-3 w-[50%] rounded-full text-[9px] flex items-center justify-center bg-yellow-200 text-black"
           >
             {{ cartCount }}
-          </Badge> */}
+          </Badge> */
+}
 </script>
 
 <template>
@@ -75,8 +78,8 @@ const proceedToCheckout = () => {
         </div>
       </SheetTrigger>
 
-      <SheetContent class="w-80 bg-yellow-100">
-        <h2 class="text-xl font-semibold text-yellow-900">Your Cart</h2>
+      <SheetContent class="w-80 bg-background">
+        <h2 class="text-xl font-semibold text-black dark:text-white">Your Cart</h2>
 
         <div
           v-if="Array.isArray(cartStore.cart) && cartStore.cart.length > 0"
@@ -163,17 +166,29 @@ const proceedToCheckout = () => {
         </div>
 
         <!-- Empty Cart Message -->
-        <p v-else class="text-center text-yellow-800 mt-4">
-          Your cart is empty.
-        </p>
+        <div v-else class="text-center text-primary dark:text-gray-400 my-20">
+          <!-- <nuxt-img
+            src="/images/empty-cart.jpg"
+            alt="Empty Cart"
+            class="mx-auto"
+          /> -->
+          <Cart height="200" width="300" />
+          <p class="mt-4 text-lg font-semibold text-primary-foreground dark:text-gray-400">
+            Omo, your cart is empty 🛒
+          </p>
+          <p class="text-sm text-primary-foreground dark:text-gray-400 mt-3">
+            Add items to your cart to continue shopping joor!! 🤣🤣🤣 
+          </p>
+        </div>
 
         <!-- Link to Products -->
-        <nuxt-link
-          to="/products"
-          class="text-center underline text-orange-700 text-sm flex justify-center mt-10"
-        >
-          Go to Products page
-        </nuxt-link>
+        <div class="mt-4 text-center">
+            <Button class="dark:bg-gray-400">
+          <nuxt-link :to="{ name: 'products' }" class="text-primary-foreground">
+            Continue Shopping
+          </nuxt-link>
+        </Button>
+        </div>
       </SheetContent>
     </Sheet>
   </div>
