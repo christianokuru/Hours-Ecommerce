@@ -52,7 +52,7 @@ defineProps({
         <span
           v-for="tag in product.tags"
           :key="tag"
-          class="text-xs bg-blue-100 dark:bg-blue-900 dark:text-white text-blue-700 px-2 py-0.5 rounded-full"
+          class="text-xs bg-blue-100 dark:bg-green-700 dark:text-white text-blue-700 px-2 py-0.5 rounded-full"
         >
           #{{ tag }}
         </span>
