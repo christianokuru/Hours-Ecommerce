@@ -183,7 +183,7 @@ const proceedToCheckout = () => {
 
         <!-- Link to Products -->
         <div class="mt-4 text-center">
-            <Button class="dark:bg-gray-400">
+            <Button class="dark:bg-gray-400 animate-bounce">
           <nuxt-link :to="{ name: 'products' }" class="text-primary-foreground">
             Continue Shopping
           </nuxt-link>

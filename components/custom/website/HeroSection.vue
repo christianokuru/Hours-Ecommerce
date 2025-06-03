@@ -23,7 +23,7 @@ const goToProducts = () => {
       <p class="text-lg md:text-xl mb-6">Minimalist fashion for every season</p>
       <button
         @click="goToProducts"
-        class="pulse px-6 py-3 bg-white text-black font-semibold rounded-full hover:bg-gray-100 transition-all"
+        class="pulse px-6 py-3 bg-white animate-bounce text-black font-semibold rounded-full mt-3 hover:bg-gray-100 transition-all"
       >
         Shop Now
       </button>
