@@ -4,13 +4,18 @@ defineProps({
     type: Object,
     required: true,
   },
-})
+});
 </script>
 
 <template>
-  <div class="bg-white dark:bg-neutral-900 rounded-2xl shadow-lg p-4 flex flex-col" :class="{ 'opacity-50 cursor-not-allowed': !product.inStock }">
+  <div
+    class="bg-white dark:bg-background border-border shadow-lg p-4 max-sm:p-0 flex flex-col"
+    :class="{ 'opacity-50 cursor-not-allowed': !product.inStock }"
+  >
     <!-- Product Image -->
-    <div class="relative w-full aspect-[4/5] mb-4 overflow-hidden rounded-xl transition-transform hover:scale-105 duration-300">
+    <div
+      class="relative w-full aspect-[4/5] mb-4 overflow-hidden rounded-xl transition-transform hover:scale-105 duration-300"
+    >
       <NuxtImg
         :src="product.image"
         :alt="product.name"
@@ -35,8 +40,12 @@ defineProps({
       <h2 class="text-lg font-semibold text-gray-800 dark:text-white">
         {{ product.name }}
       </h2>
-      <p class="text-sm text-gray-500 dark:text-gray-400">{{ product.category }}</p>
-      <p class="text-primary font-bold text-xl">${{ product.price.toFixed(2) }}</p>
+      <p class="text-sm text-gray-500 dark:text-gray-400">
+        {{ product.category }}
+      </p>
+      <p class="text-primary font-bold text-xl">
+        ${{ product.price.toFixed(2) }}
+      </p>
 
       <!-- Tags -->
       <div class="flex flex-wrap gap-2">
@@ -72,7 +81,6 @@ defineProps({
       <button
         :disabled="!product.inStock"
         class="mt-4 px-4 py-2 bg-primary text-primary-foreground font-semibold rounded-full hover:bg-primary/90 transition"
-        
       >
         {{ product.inStock ? "Add to Cart" : "Out of Stock" }}
       </button>
