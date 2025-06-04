@@ -4,7 +4,9 @@ import { useRoute } from "vue-router"
 import Cart from "@/assets/icons/cart.vue"
 import DarkModeComponent from "@/components/custom/website/DarkModeComponent.vue"
 import MobileNavbarComponent from "@/components/custom/website/MobileNavbarComponent.vue"
+import CartComponent from "@/components/custom/website/CartComponent.vue"
 import { links } from '@/lib/navlinks.js'
+import { Button } from '@/components/ui/button'
 import logo from "@/assets/icons/logo.vue"
 
 const route = useRoute()
@@ -41,9 +43,9 @@ onUnmounted(() => {
             v-for="item in links"
             :key="item.name"
             :to="item.path"
-            class="relative group py-2 transition-colors"
+            class="relative py-4 transition-colors"
             :class="{
-              'text-primary-foreground font-[700] text-lg': route.path === item.path,
+              'text-primary-foreground border-b-[3px] border-primary-foreground font-[700] text-lg': route.path === item.path,
               'hover:text-primary': route.path !== item.path,
             }"
           >
@@ -52,11 +54,11 @@ onUnmounted(() => {
         </div>
 
         <!-- Buttons -->
-        <div class="hidden md:flex items-center space-x-4">
+        <div class="hidden md:flex items-center space-x-5">
           <button
-            class="px-4 py-2 rounded-full hover:bg-primary hover:text-primary-foreground transition-colors flex items-center"
+            class="mr-5 hover:text-primary transition-colors flex items-center"
           >
-            <Cart />
+            <cart-component />
           </button>
           <nuxt-link to="/auth/login">
             <button
@@ -74,7 +76,7 @@ onUnmounted(() => {
             variant="ghost"
             class="px-4 py-2 rounded-full hover:text-primary-foreground transition-colors flex items-center"
           >
-            <Cart width="20px" height="20px" />
+          <cart-component />
           </Button>
           <dark-mode-component />
           <mobile-navbar-component />

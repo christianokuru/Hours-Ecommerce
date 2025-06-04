@@ -1,76 +1,84 @@
-// stores/cart.js
-import { defineStore } from 'pinia'
-import { useStorage } from '@vueuse/core'
+import { defineStore } from "pinia";
+import { useStorage } from "@vueuse/core";
+import { computed } from "vue";
 
-export const useCartStore = defineStore('cart', () => {
-  // Persist cart in localStorage
-  const cart = useStorage('cart-items', [])
+export const useCartStore = defineStore(
+  "cart",
+  () => {
+    const cart = useStorage("cart-items", []);
 
-  // Add a product to cart
-  function addToCart(product) {
-    const existing = cart.value.find(item => item.id === product.id)
+    function addToCart(product) {
+      const existing = cart.value.find((item) => item.id === product.id);
 
-    if (existing) {
-      if (existing.quantity < 10) existing.quantity++
-    } else {
-      cart.value.push({
-        ...product,
-        quantity: 1,
-      })
+      if (existing) {
+        if (existing.quantity < 10) existing.quantity++;
+      } else {
+        cart.value.push({
+          ...product,
+          quantity: 1,
+        });
+      }
     }
-  }
 
-  // Remove a product
-  function removeFromCart(productId) {
-    cart.value = cart.value.filter(item => item.id !== productId)
-  }
+    function increaseQuantity(productId) {
+      const item = cart.value.find((i) => i.id === productId);
+      if (item && item.quantity < 10) {
+        item.quantity++;
+      }
+    }
 
-  // Clear cart
-  function clearCart() {
-    cart.value = []
-  }
+    function decreaseQuantity(productId) {
+      const item = cart.value.find((i) => i.id === productId);
+      if (item && item.quantity > 1) {
+        item.quantity--;
+      }
+    }
 
-  // Check if item is in cart
-  function isInCart(productId) {
-    return cart.value.some(item => item.id === productId)
-  }
+    function removeFromCart(productId) {
+      cart.value = cart.value.filter((item) => item.id !== productId);
+    }
 
-  // Get total number of items
-  const totalItems = computed(() =>
-    cart.value.reduce((total, item) => total + item.quantity, 0)
-  )
+    function clearCart() {
+      cart.value = [];
+    }
 
-  // Total without discount
-  const rawTotal = computed(() =>
-    cart.value.reduce((total, item) => total + item.quantity * item.price, 0)
-  )
+    function isInCart(productId) {
+      return cart.value.some((item) => item.id === productId);
+    }
 
-  // Discount (e.g., 10% off if total > $100)
-  const discount = computed(() => (rawTotal.value > 100 ? 0.1 : 0))
+    const totalItems = computed(() =>
+      cart.value.reduce((total, item) => total + item.quantity, 0)
+    );
 
-  // Total with discount
-  const totalPrice = computed(() =>
-    rawTotal.value * (1 - discount.value)
-  )
+    const rawTotal = computed(() =>
+      cart.value.reduce((total, item) => total + item.quantity * item.price, 0)
+    );
 
-  // Subtotal for each item
-  function getItemSubtotal(item) {
-    return item.quantity * item.price
-  }
+    const discount = computed(() => (rawTotal.value > 100 ? 0.1 : 0));
 
-  return {
-    cart,
-    addToCart,
-    removeFromCart,
-    clearCart,
-    isInCart,
-    totalItems,
-    totalPrice,
-    rawTotal,
-    discount,
-    getItemSubtotal,
+    const totalPrice = computed(() => rawTotal.value * (1 - discount.value));
+
+    function getItemSubtotal(item) {
+      return item.quantity * item.price;
+    }
+
+    // Return **all reactive state and methods in ONE object**
+    return {
+      cart,
+      addToCart,
+      removeFromCart,
+      clearCart,
+      isInCart,
+      totalItems,
+      totalPrice,
+      rawTotal,
+      discount,
+      getItemSubtotal,
+      increaseQuantity,
+      decreaseQuantity,
+    };
   },
   {
-    persist: true, // Enables persistence
+    persist: true, // This is the Pinia plugin config, outside return
   }
-})
+);
