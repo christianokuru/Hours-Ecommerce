@@ -78,7 +78,8 @@ export const useCartStore = defineStore(
       decreaseQuantity,
     };
   },
-  {
-    persist: true, // This is the Pinia plugin config, outside return
-  }
+  // This was removed because useStorage is already used for persistence
+  // {
+  //   persist: true, // This is the Pinia plugin config, outside return
+  // }
 );

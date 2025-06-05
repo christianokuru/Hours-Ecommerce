@@ -15,7 +15,6 @@ const addToCart = (product) => {
 
 <template>
   <div class="mx-36 max-sm:mx-6 max-sm:mt-0">
-    <!-- <stepper-component /> -->
     <div class="flex justify-between items-center">
       <h1 class="text-4xl font-[600] my-16 max-sm:text-2xl">Our Top Sales</h1>
       <ui-button variant="outline" size="lg">
@@ -33,3 +32,6 @@ const addToCart = (product) => {
     </div>
   </div>
 </template>
+
+
+
