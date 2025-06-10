@@ -1,5 +1,5 @@
 <script setup>
-import { toast } from "vue-sonner"
+import { toast } from "vue-sonner";
 
 const props = defineProps({
   product: {
@@ -14,13 +14,11 @@ const props = defineProps({
 
 const handleAddToCart = () => {
   console.log("Product added to cart:", props.product);
-  props.onAddToCart(); 
+  props.onAddToCart();
   toast.success(`Product added to cart 🎉`, {
     description: `${props.product.name} has been added to your cart.`,
   });
 };
-
-
 </script>
 
 <template>
@@ -28,34 +26,40 @@ const handleAddToCart = () => {
     class="bg-white dark:bg-background border border-border rounded-2xl shadow-lg p-4 max-sm:p-0 flex flex-col"
     :class="{ 'opacity-50 cursor-not-allowed': !product.inStock }"
   >
-    <!-- Product Image -->
-    <div
-      class="relative w-full aspect-[4/5] mb-4 overflow-hidden rounded-xl transition-transform hover:scale-105 duration-300"
-    >
-      <NuxtImg
-        :src="product.image"
-        :alt="product.name"
-        class="object-cover w-full h-full"
-      />
-      <span
-        v-if="product.inStock"
-        class="absolute top-2 right-2 bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded-full"
+    <!-- Product Image + Name wrapped with nuxt-link -->
+    <nuxt-link :to="`/products/${product.id}`">
+      <div
+        class="relative w-full aspect-[4/5] mb-4 overflow-hidden rounded-xl transition-transform hover:scale-105 duration-300"
       >
-        In Stock
-      </span>
-      <span
-        v-else
-        class="absolute top-2 right-2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full"
-      >
-        Out of Stock
-      </span>
-    </div>
+        <NuxtImg
+          :src="product.image"
+          :alt="product.name"
+          class="object-cover w-full h-full"
+        />
+        <span
+          v-if="product.inStock"
+          class="absolute top-2 right-2 bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded-full"
+        >
+          In Stock
+        </span>
+        <span
+          v-else
+          class="absolute top-2 right-2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full"
+        >
+          Out of Stock
+        </span>
+      </div>
+    </nuxt-link>
 
     <!-- Product Details -->
     <div class="flex flex-col gap-2 max-sm:px-4 max-sm:pb-4">
-      <h2 class="text-lg font-semibold text-gray-800 dark:text-white">
-        {{ product.name }}
-      </h2>
+      <nuxt-link :to="`/products/${product.id}`">
+        <h2
+          class="text-lg font-semibold text-gray-800 dark:text-white hover:underline"
+        >
+          {{ product.name }}
+        </h2>
+      </nuxt-link>
       <p class="text-sm text-gray-500 dark:text-gray-400">
         {{ product.category }}
       </p>

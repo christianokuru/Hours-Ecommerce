@@ -45,7 +45,7 @@ onUnmounted(() => {
             :to="item.path"
             class="relative py-4 transition-colors"
             :class="{
-              'text-primary-foreground border-b-[3px] border-primary-foreground font-[700] text-lg': route.path === item.path,
+              'text-black border-b-[3px] border-black font-[700] text-lg dark:text-yellow-200 dark:border-yellow-200': route.path === item.path,
               'hover:text-primary': route.path !== item.path,
             }"
           >
