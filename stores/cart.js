@@ -1,11 +1,13 @@
 import { defineStore } from "pinia";
-import { useStorage } from "@vueuse/core";
+import { useLocalStorage } from "@vueuse/core";
+import { ref } from "vue";
 import { computed } from "vue";
 
 export const useCartStore = defineStore(
   "cart",
   () => {
-    const cart = useStorage("cart-items", []);
+    const cart = ref([]);
+    //const cart = useLocalStorage("cart-items", []);
 
     function addToCart(product) {
       const existing = cart.value.find((item) => item.id === product.id);
@@ -78,8 +80,7 @@ export const useCartStore = defineStore(
       decreaseQuantity,
     };
   },
-  // This was removed because useStorage is already used for persistence
-  // {
-  //   persist: true, // This is the Pinia plugin config, outside return
-  // }
+  {
+    persist: true,
+  }
 );
