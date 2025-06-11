@@ -3,6 +3,10 @@ import { products } from "~/lib/products";
 import ProductCardComponent from "@/components/custom/website/ProductCardComponent.vue";
 import { useCartStore } from "@/stores/cart";
 
+useHead({
+  title: "All Our Products",
+});
+
 const cartStore = useCartStore();
 
 const addToCart = (product) => {
