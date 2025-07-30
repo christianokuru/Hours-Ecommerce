@@ -2,6 +2,7 @@
 import { useRoute } from "vue-router";
 import { products } from "~/lib/products";
 import { useSeoMeta, useHead } from "#imports";
+import { toast } from "vue-sonner";
 
 const route = useRoute();
 const id = route.params.id;
@@ -12,6 +13,20 @@ const relatedProducts = products.filter(
 
 // Default selected color (first one)
 const selectedColor = ref(product?.colors?.[0] || "");
+
+const selectedSize = ref(product?.sizes?.[0] || "");
+
+const cartStore = useCartStore();
+const addToCart = (product) => {
+  cartStore.addToCart(product, {
+    color: selectedColor.value,
+    size: selectedSize.value,
+  });
+  toast.success(`Product added to cart 🎉`, {
+    description: `${product.name} (${selectedColor.value}, ${selectedSize.value}) has been added to your cart.`,
+  });
+  console.log("product: ", product, "color:", selectedColor.value, "size:", selectedSize.value);
+}
 
 if (product) {
   useSeoMeta({
@@ -99,7 +114,8 @@ useHead({
           <span
             v-for="size in product.sizes"
             :key="size"
-            class="px-3 py-1 border border-gray-300 rounded-full text-sm text-gray-600"
+            :class="['px-3 py-1 border border-gray-300 rounded-full text-sm text-gray-600 cursor-pointer', selectedSize === size ? 'bg-gray-200' : '']"
+            @click="selectedSize = size"
           >
             {{ size }}
           </span>
@@ -109,6 +125,7 @@ useHead({
         <button
           :disabled="!product.inStock"
           class="bg-black text-white px-6 py-3 rounded-full hover:bg-gray-800 disabled:bg-gray-400 disabled:cursor-not-allowed transition"
+          @click="() => addToCart(product)"
         >
           Add to Cart
         </button>
