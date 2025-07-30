@@ -12,11 +12,18 @@ const props = defineProps({
   },
 });
 
+const selectedColor = ref(props.product?.colors?.[0] || "");
+
+const selectedSize = ref(props.product?.sizes?.[0] || "");
+
 const handleAddToCart = () => {
-  console.log("Product added to cart:", props.product);
-  props.onAddToCart();
+  props.onAddToCart({
+    ...props.product,
+    size: selectedSize.value,
+    color: selectedColor.value,
+  });
   toast.success(`Product added to cart 🎉`, {
-    description: `${props.product.name} has been added to your cart.`,
+    description: `${props.product.name} (${selectedColor.value}, ${selectedSize.value}) has been added to your cart.`,
   });
 };
 </script>
@@ -91,7 +98,8 @@ const handleAddToCart = () => {
         <span
           v-for="size in product.sizes"
           :key="size"
-          class="border border-destructive/30 dark:border-red-300 px-2 py-1 text-sm rounded"
+          :class="['border border-destructive/30 dark:border-red-300 px-2 py-1 text-sm rounded cursor-pointer', selectedSize === size ? 'bg-gray-200 text-black' : '']"
+          @click="selectedSize = size"
         >
           {{ size }}
         </span>
