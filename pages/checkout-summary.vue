@@ -3,6 +3,7 @@ import { useOrderStore } from '@/stores/order';
 import { ref } from 'vue';
 import { loadStripe } from '@stripe/stripe-js';
 import { toast } from 'vue-sonner';
+import { navigateTo } from '#app';
 
 const orderStore = useOrderStore();
 const payload = orderStore.payload;
@@ -19,6 +20,10 @@ async function handleStripePayment() {
     description: `Thank you for your payment of $${payload.total.toFixed(2)}. Your order is confirmed.`
   });
   isPaying.value = false;
+  // Save payload to store (redundant, but ensures latest data)
+  orderStore.setPayload(payload);
+  // Redirect to order-details page
+  navigateTo('/order-details');
 }
 
 // async function handleStripePayment() {
