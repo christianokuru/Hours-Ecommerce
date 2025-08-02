@@ -156,7 +156,7 @@ const proceedToCheckout = () => {
           </div>
 
           <!-- Checkout Button -->
-          <nuxt-link :to="{ name: 'checkout-summary' }" class="block w-full">
+          <nuxt-link :to="{ name: 'cart-summary' }" class="block w-full">
             <Button
               class="w-full mt-4 bg-orange-700 hover:bg-orange-600 text-white"
               @click="proceedToCheckout"

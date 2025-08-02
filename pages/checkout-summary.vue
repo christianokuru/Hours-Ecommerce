@@ -1,8 +1,44 @@
 <script setup>
 import { useOrderStore } from '@/stores/order';
+import { ref } from 'vue';
+import { loadStripe } from '@stripe/stripe-js';
+import { toast } from 'vue-sonner';
 
 const orderStore = useOrderStore();
 const payload = orderStore.payload;
+
+const stripePromise = loadStripe('pk_test_51Rrbf4LLc8gW1PU99WoePhNDfhQsKnBPJjJi91KK70EkGaIGgVTlQF8wo0Q1g8IvTGNvGba73UByHcnTQ1AonqWt00VEQFuBw9');
+const cardElement = ref(null);
+const isPaying = ref(false);
+
+async function handleStripePayment() {
+  isPaying.value = true;
+  // Mock payment: simulate delay and success
+  await new Promise(resolve => setTimeout(resolve, 2000));
+  toast.success('Payment successful! (mocked)', {
+    description: `Thank you for your payment of $${payload.total.toFixed(2)}. Your order is confirmed.`
+  });
+  isPaying.value = false;
+}
+
+// async function handleStripePayment() {
+//   isPaying.value = true;
+//   try {
+//     // Call backend to create Stripe Checkout session
+//     const response = await fetch('http://localhost:8000/api/stripe/checkout', {
+//       method: 'POST',
+//       headers: { 'Content-Type': 'application/json' },
+//       body: JSON.stringify({ order_id: payload?.order_id || 3 })
+//     });
+//     const data = await response.json();
+//     if (!data.sessionId) throw new Error('No sessionId returned');
+//     const stripe = await stripePromise;
+//     await stripe.redirectToCheckout({ sessionId: data.sessionId });
+//   } catch (err) {
+//     toast.error('Payment failed: ' + err.message);
+//     isPaying.value = false;
+//   }
+// }
 </script>
 
 <template>
@@ -55,6 +91,22 @@ const payload = orderStore.payload;
         <div class="flex justify-between text-2xl mt-2">
           <span class="font-bold text-orange-700">Total:</span>
           <span class="font-extrabold text-orange-900">${{ payload.total.toFixed(2) }}</span>
+        </div>
+
+        <!-- Stripe Payment UI -->
+        <div class="mt-8">
+          <h2 class="text-xl font-semibold mb-4 text-center">Pay with Card</h2>
+          <div class="flex flex-col items-center gap-4">
+            <button
+              class="px-8 py-3 bg-gradient-to-r from-orange-600 to-orange-400 text-white font-bold rounded-full text-lg shadow-lg transition w-full"
+              :disabled="isPaying"
+              @click="handleStripePayment"
+            >
+              <span v-if="isPaying" class="animate-spin mr-2 inline-block w-5 h-5 border-2 border-white border-t-transparent rounded-full"></span>
+              Pay ${{ payload.total.toFixed(2) }} with Stripe
+            </button>
+            <p class="text-xs text-gray-500 text-center">You will be redirected to Stripe to complete your payment securely.</p>
+          </div>
         </div>
       </div>
     </div>
