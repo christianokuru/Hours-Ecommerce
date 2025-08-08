@@ -37,7 +37,7 @@ useHead({
 </script>
 
 <template>
-  <div class="max-w-6xl mx-auto px-4 py-10 mt-20 max-sm:mt-0">
+  <div class="max-w-6xl mx-auto px-4 py-10 mt-20 max-sm:mt-14">
     <div v-if="product" class="grid grid-cols-1 md:grid-cols-2 gap-12">
       <!-- Zoomable Product Image -->
       <div class="relative group overflow-hidden rounded-lg bg-gray-100">
@@ -164,7 +164,7 @@ useHead({
               class="rounded-lg w-full h-40 object-cover mb-2"
             />
             <h3 class="font-semibold text-gray-800">{{ item.name }}</h3>
-            <p class="text-green-600 text-sm">₦{{ item.price.toFixed(2) }}</p>
+            <p class="text-green-600 text-sm">${{ item.price.toFixed(2) }}</p>
           </NuxtLink>
         </div>
       </div>
@@ -172,7 +172,7 @@ useHead({
 
     <!-- Product Not Found -->
     <div v-else class="text-center text-red-600 font-bold text-lg">
-      ❌ Product not found!
+      ❌ Product not found!!!
     </div>
   </div>
 </template>
