@@ -156,13 +156,15 @@ const proceedToCheckout = () => {
           </div>
 
           <!-- Checkout Button -->
-          <Button
-            class="w-full mt-4 bg-orange-700 hover:bg-orange-600 text-white"
-            @click="proceedToCheckout"
-            :disabled="isLoading"
-          >
-            {{ isLoading ? "Processing..." : "Proceed to Checkout" }}
-          </Button>
+          <nuxt-link :to="{ name: 'cart-summary' }" class="block w-full">
+            <Button
+              class="w-full mt-4 bg-orange-700 hover:bg-orange-600 text-white"
+              @click="proceedToCheckout"
+              :disabled="isLoading"
+            >
+              {{ isLoading ? "Processing..." : "Proceed to Checkout" }}
+            </Button>
+          </nuxt-link>
         </div>
 
         <!-- Empty Cart Message -->
