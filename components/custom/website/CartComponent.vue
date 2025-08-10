@@ -1,6 +1,7 @@
 <script setup>
 import { computed, ref } from "vue";
 import { useCartStore } from "@/stores/cart";
+import { useRouter } from "vue-router";
 import {
   Sheet,
   SheetContent,
@@ -22,7 +23,9 @@ import { toast } from "vue-sonner";
 
 // Store and state
 const cartStore = useCartStore();
+const router = useRouter();
 const isLoading = ref(false);
+const isOpen = ref(false);
 
 // Common button styles
 const buttonStyles = {
@@ -80,14 +83,15 @@ const handleCheckout = () => {
   isLoading.value = true;
   setTimeout(() => {
     isLoading.value = false;
-    // Navigate to checkout
+    isOpen.value = false; // Close the sheet
+    router.push({ name: 'cart-summary' }); // Navigate to checkout
   }, 1500);
 };
 </script>
 
 <template>
   <div>
-    <sheet>
+    <sheet v-model:open="isOpen">
       <!-- Cart Trigger -->
       <sheet-trigger as-child>
         <div class="relative hover:cursor-pointer group transition-all duration-200 hover:scale-105">
@@ -207,23 +211,21 @@ const handleCheckout = () => {
 
           <!-- Action Buttons -->
           <div class="space-y-3 pt-4">
-            <nuxt-link :to="{ name: 'cart-summary' }" class="block w-full">
-              <button
-                @click="handleCheckout"
-                :class="buttonStyles.primary"
-                :disabled="isLoading"
-              >
-                {{ isLoading ? "Processing..." : "Proceed to Checkout" }}
-                <shopping-bag v-if="!isLoading" class="h-4 w-4" />
-                <div
-                  v-else
-                  class="animate-spin rounded-full h-4 w-4 border-2 border-primary-foreground border-t-transparent"
-                />
-              </button>
-            </nuxt-link>
+            <button
+              @click="handleCheckout"
+              :class="buttonStyles.primary"
+              :disabled="isLoading"
+            >
+              {{ isLoading ? "Processing..." : "Proceed to Checkout" }}
+              <shopping-bag v-if="!isLoading" class="h-4 w-4" />
+              <div
+                v-else
+                class="animate-spin rounded-full h-4 w-4 border-2 border-primary-foreground border-t-transparent"
+              />
+            </button>
 
             <nuxt-link :to="{ name: 'products' }">
-              <button :class="buttonStyles.secondary">
+              <button :class="buttonStyles.secondary" @click="isOpen = false">
                 Continue Shopping
               </button>
             </nuxt-link>
@@ -247,7 +249,7 @@ const handleCheckout = () => {
           </div>
 
           <nuxt-link :to="{ name: 'products' }">
-            <button class="bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-6 py-2 rounded-md font-medium transition-all duration-200 hover:scale-105 flex items-center gap-2">
+            <button class="bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-6 py-2 rounded-md font-medium transition-all duration-200 hover:scale-105 flex items-center gap-2" @click="isOpen = false">
               <shopping-bag class="h-4 w-4" />
               Start Shopping
             </button>
