@@ -91,7 +91,7 @@ const clearFilters = () => {
     <!-- Hero Section -->
     <section class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
       <div class="px-6 lg:px-36 py-16">
-        <div class="max-w-4xl mx-auto text-center max-md:mt-20">
+        <div class="max-w-4xl mx-auto text-center">
           <h1 class="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
             Our Complete
             <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
