@@ -55,10 +55,10 @@ onUnmounted(() => {
 
 <template>
   <header
-    class="fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-out"
+    class="fixed top-0 left-0 w-full z-50 transition-all duration-1000 ease-out"
     :class="[
       isScrolled || isHovering
-        ? 'backdrop-blur-xl bg-background/95 border-b border-border/50 shadow-lg'
+        ? 'backdrop-blur-xl bg-background/95  shadow-lg'
         : 'backdrop-blur-md bg-white/10 dark:bg-black/10 shadow-sm',
     ]"
     @mouseenter="handleMouseEnter"
