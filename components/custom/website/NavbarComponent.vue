@@ -7,26 +7,19 @@ import DarkModeComponent from "@/components/custom/website/DarkModeComponent.vue
 import MobileNavbarComponent from "@/components/custom/website/MobileNavbarComponent.vue";
 import CartComponent from "@/components/custom/website/CartComponent.vue";
 import { links } from "@/lib/navlinks.js";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import logo from "@/assets/icons/logo.vue";
 
 const route = useRoute();
 const cartStore = useCartStore();
 const isScrolled = ref(false);
+const scrollProgress = ref(0);
 const isHovering = ref(false);
 const activeDropdown = ref(null);
-
-// Enhanced scroll behavior
-const handleScroll = () => {
-  const scrollY = window.scrollY;
-  isScrolled.value = scrollY > 20;
-};
 
 // Cart items count for badge
 const cartItemsCount = computed(() => cartStore.totalItems);
 
-// Check if user is authenticated (you can replace this with actual auth logic)
+// Check if user is authenticated (placeholder)
 const isAuthenticated = ref(false);
 
 const handleMouseEnter = () => {
@@ -42,10 +35,19 @@ const setActiveDropdown = (dropdown) => {
   activeDropdown.value = activeDropdown.value === dropdown ? null : dropdown;
 };
 
+// Scroll behavior
+const handleScroll = () => {
+  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  const scrollHeight =
+    document.documentElement.scrollHeight - window.innerHeight;
+
+  isScrolled.value = scrollTop > 20;
+  scrollProgress.value = Math.min((scrollTop / scrollHeight) * 100, 100);
+};
+
 onMounted(() => {
   window.addEventListener("scroll", handleScroll, { passive: true });
-  // Check authentication status
-  // isAuthenticated.value = checkAuthStatus()
+  handleScroll(); // initialize
 });
 
 onUnmounted(() => {
@@ -57,14 +59,14 @@ onUnmounted(() => {
   <header
     class="fixed top-0 left-0 w-full z-50 transition-all duration-1000 ease-out"
     :class="[
-      isScrolled || isHovering
-        ? 'backdrop-blur-xl bg-background/95  shadow-lg'
-        : 'backdrop-blur-md bg-white/10 dark:bg-black/10 shadow-sm',
+      isScrolled
+        ? 'backdrop-blur-xl bg-white/95 dark:bg-gray-800/95 shadow-lg'
+        : 'backdrop-blur-0 bg-transparent',
     ]"
     @mouseenter="handleMouseEnter"
     @mouseleave="handleMouseLeave"
   >
-    <!-- Top announcement bar (optional) -->
+    <!-- Top announcement bar -->
     <div
       v-if="!isScrolled"
       class="bg-gradient-to-r from-blue-600 to-purple-600 text-white text-center py-2 text-sm font-medium transition-all duration-500"
@@ -74,11 +76,9 @@ onUnmounted(() => {
       </p>
     </div>
 
-    <div
-      class="max-w-7xl mx-auto px-4 lg:px-6 sticky top-0 z-40 backdrop-blur-sm bg-white/15 dark:bg-gray-800/95"
-    >
+    <div class="max-w-7xl mx-auto px-4 lg:px-6 sticky top-0 z-40">
       <nav class="flex items-center justify-between h-16 lg:h-20">
-        <!-- Logo Section -->
+        <!-- Logo -->
         <nuxt-link
           to="/"
           class="flex items-center space-x-3 group transition-transform duration-300 hover:scale-105"
@@ -89,7 +89,6 @@ onUnmounted(() => {
               height="45px"
               class="transition-all duration-300 group-hover:rotate-12"
             />
-            <!-- Logo glow effect -->
             <div
               class="absolute inset-0 bg-primary/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"
             />
@@ -101,7 +100,7 @@ onUnmounted(() => {
           </span>
         </nuxt-link>
 
-        <!-- Desktop Navigation Links -->
+        <!-- Desktop Nav Links -->
         <div class="hidden lg:flex items-center space-x-1">
           <nuxt-link
             v-for="item in links"
@@ -131,14 +130,12 @@ onUnmounted(() => {
           </nuxt-link>
         </div>
 
-        <!-- Desktop Action Buttons -->
+        <!-- Desktop Actions -->
         <div class="hidden lg:flex items-center space-x-3">
-          <!-- Cart Button with Badge -->
           <div class="relative">
             <cart-component />
           </div>
 
-          <!-- Wishlist Button -->
           <button
             class="p-2 rounded-lg hover:bg-white/20 dark:hover:bg-black/20 transition-colors duration-200 group relative"
           >
@@ -157,7 +154,6 @@ onUnmounted(() => {
             </svg>
           </button>
 
-          <!-- Auth Button -->
           <nuxt-link v-if="!isAuthenticated" to="/auth/login">
             <button
               class="px-6 py-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-105 active:scale-95"
@@ -166,7 +162,6 @@ onUnmounted(() => {
             </button>
           </nuxt-link>
 
-          <!-- User Profile (when authenticated) -->
           <div v-else class="relative">
             <button
               @click="setActiveDropdown('profile')"
@@ -222,41 +217,27 @@ onUnmounted(() => {
             </div>
           </div>
 
-          <!-- Dark Mode Toggle -->
           <dark-mode-component />
         </div>
 
-        <!-- Mobile Menu Section -->
+        <!-- Mobile Menu -->
         <div class="lg:hidden flex items-center space-x-2">
-          <!-- Mobile Cart -->
-          <div class="relative">
-            <button
-              class="p-2 rounded-lg hover:bg-white/20 dark:hover:bg-black/20 transition-colors duration-200"
-            >
-              <cart-component />
-            </button>
-          </div>
-
-          <!-- Dark Mode Toggle -->
+          <button
+            class="p-2 rounded-lg hover:bg-white/20 dark:hover:bg-black/20 transition-colors duration-200"
+          >
+            <cart-component />
+          </button>
           <dark-mode-component />
-
-          <!-- Mobile Menu Toggle -->
           <mobile-navbar-component />
         </div>
       </nav>
     </div>
 
-    <!-- Progress Bar for Scroll -->
+    <!-- Scroll Progress Bar -->
     <div
       v-if="isScrolled"
       class="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-600 transition-all duration-300"
-      :style="{
-        width: `${Math.min(
-          (window.scrollY / (document.body.scrollHeight - window.innerHeight)) *
-            100,
-          100
-        )}%`,
-      }"
+      :style="{ width: scrollProgress + '%' }"
     />
   </header>
 </template>
