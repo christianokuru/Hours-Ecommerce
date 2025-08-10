@@ -108,9 +108,9 @@ onUnmounted(() => {
             :to="item.path"
             class="relative px-4 py-2 rounded-lg transition-all duration-300 group"
             :class="{
-              'bg-primary/20 text-primary font-semibold shadow-sm':
+              'bg-gradient-to-r from-purple-500/40 to-blue-500/40 text-primary font-semibold shadow-sm':
                 route.path === item.path,
-              'text-gray-700 dark:text-gray-200 hover:text-primary hover:bg-white/20 dark:hover:bg-black/20':
+              'text-gray-900 dark:text-gray-200 hover:text-primary hover:bg-white/30 dark:hover:bg-black/20':
                 route.path !== item.path,
             }"
           >
@@ -124,7 +124,7 @@ onUnmounted(() => {
 
             <!-- Hover effect -->
             <div
-              class="absolute inset-0 bg-gradient-to-r from-primary/20 to-blue-500/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-sm"
+              class="absolute inset-0 bg-gradient-to-r from-purple-500/40 to-blue-500/40 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-sm"
               :class="{ 'opacity-0': route.path === item.path }"
             />
           </nuxt-link>
