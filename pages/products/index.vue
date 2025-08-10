@@ -123,7 +123,7 @@ const clearFilters = () => {
     </section>
 
     <!-- Filters Section -->
-    <section class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40 backdrop-blur-sm bg-white/95 dark:bg-gray-800/95">
+    <section class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
       <div class="px-6 lg:px-36 py-6">
         <div class="flex flex-col lg:flex-row gap-4 items-center justify-between">
           <!-- Search -->
