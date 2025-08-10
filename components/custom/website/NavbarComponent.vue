@@ -75,7 +75,7 @@ onUnmounted(() => {
     </div>
 
     <div
-      class="max-w-7xl mx-auto px-4 lg:px-6 lg:sticky top-0 z-40 backdrop-blur-sm bg-white/15 dark:bg-gray-800/95"
+      class="max-w-7xl mx-auto px-4 lg:px-6 sticky top-0 z-40 backdrop-blur-sm bg-white/15 dark:bg-gray-800/95"
     >
       <nav class="flex items-center justify-between h-16 lg:h-20">
         <!-- Logo Section -->
