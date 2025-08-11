@@ -56,7 +56,7 @@ const goToProducts = () => {
             </span>
           </h1>
           
-          <p class="text-lg text-white drop-shadow-md font-light">
+          <p class="text-lg text-white drop-shadow-md font-normal">
             Premium streetwear for the modern lifestyle
           </p>
         </div>
