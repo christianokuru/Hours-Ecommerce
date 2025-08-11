@@ -53,7 +53,7 @@ const data = {
     },
     {
       title: "Payments and Transactions",
-      url: "/dashboard/users/",
+      url: "/dashboard/users/payments",
       icon: CreditCard,
       showChevron: false,
       

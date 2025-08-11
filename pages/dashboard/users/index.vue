@@ -49,7 +49,7 @@ const total = computed(() =>
     <UserDashboardSidebarComponent />
     <SidebarInset>
       <!-- HEADER -->
-  <header class="flex h-16 items-center gap-2 mt-4 px-4 bg-white dark:bg-gray-900 shadow rounded-lg">
+  <header class="flex h-16 items-center gap-2 mt-6 px-4 bg-white dark:bg-gray-900 shadow rounded-lg">
         <SidebarTrigger class="-ml-1" />
         <Separator orientation="vertical" class="mx-2 h-5" />
         <Breadcrumb>
@@ -66,7 +66,7 @@ const total = computed(() =>
       </header>
 
       <!-- CONTENT -->
-  <div class="flex flex-1 flex-col gap-6 p-6 bg-gray-50 dark:bg-gray-950 min-h-screen">
+  <div class="flex flex-1 flex-col gap-6 p-6 bg-gray-50 dark:bg-gray-950 min-h-screen mt-3">
 
         <!-- STATS CARDS -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
