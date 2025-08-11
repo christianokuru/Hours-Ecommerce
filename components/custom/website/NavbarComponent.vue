@@ -101,7 +101,7 @@ onUnmounted(() => {
         </nuxt-link>
 
         <!-- Desktop Nav Links -->
-        <div class="hidden lg:flex items-center space-x-1">
+        <div class="hidden lg:flex border border-gray-200/40 dark:border-gray-700 rounded-lg px-5 bg-white/40 dark:bg-gray-800/50 items-center space-x-1">
           <nuxt-link
             v-for="item in links"
             :key="item.name"
