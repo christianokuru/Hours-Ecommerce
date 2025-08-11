@@ -35,11 +35,11 @@ const goToProducts = () => {
             <span class="block text-white drop-shadow-lg">
               <span class="relative">
                 Define Your Moment
-                <svg class="absolute -bottom-2 left-0 w-full h-4" viewBox="0 0 300 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg class="absolute -bottom-2 left-0 w-full h-4" viewBox="0 0 900 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path 
                     d="M5,15 Q50,5 100,12 T200,8 Q250,15 295,10" 
                     stroke="url(#brush-gradient)" 
-                    stroke-width="6" 
+                    stroke-width="10" 
                     stroke-linecap="round"
                     fill="none"
                     class="animate-draw"
