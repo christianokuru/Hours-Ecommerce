@@ -3,12 +3,9 @@ import NavbarComponent from "~/components/custom/website/NavbarComponent.vue";
 import FooterComponent from "~/components/custom/website/FooterComponent.vue";
 import { Toaster } from "@/components/ui/sonner";
 import "vue-sonner/style.css";
+import { useRoute } from "vue-router";
 
-const { progress, isLoading, error, start, finish, clear } =
-  useLoadingIndicator({
-    throttle: 900,
-    duration: 1000,
-  });
+const route = useRoute();
 </script>
 
 <template>
@@ -16,7 +13,12 @@ const { progress, isLoading, error, start, finish, clear } =
   <div>
     <Toaster :position="'bottom-right'" :rich-colors="true" />
     <NavbarComponent />
-    <NuxtPage />
+
+    <!-- Apply padding-top only if NOT home page -->
+    <main :class="{ 'pt-20': route.path !== '/' }">
+      <NuxtPage />
+    </main>
+
     <FooterComponent />
   </div>
 </template>

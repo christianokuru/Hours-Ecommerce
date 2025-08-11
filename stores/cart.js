@@ -9,8 +9,14 @@ export const useCartStore = defineStore(
     const cart = ref([]);
     //const cart = useLocalStorage("cart-items", []);
 
-    function addToCart(product) {
-      const existing = cart.value.find((item) => item.id === product.id);
+    function addToCart(product, options = {}) {
+      // options: { color, size }
+      const selectedColor = options.color || (product.colors?.[0] ?? null);
+      const selectedSize = options.size || (product.sizes?.[0] ?? null);
+      // Find by id, color, and size
+      const existing = cart.value.find(
+        (item) => item.id === product.id && item.selectedColor === selectedColor && item.selectedSize === selectedSize
+      );
 
       if (existing) {
         if (existing.quantity < 10) existing.quantity++;
@@ -18,6 +24,8 @@ export const useCartStore = defineStore(
         cart.value.push({
           ...product,
           quantity: 1,
+          selectedColor,
+          selectedSize,
         });
       }
     }

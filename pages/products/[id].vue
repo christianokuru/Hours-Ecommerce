@@ -2,6 +2,7 @@
 import { useRoute } from "vue-router";
 import { products } from "~/lib/products";
 import { useSeoMeta, useHead } from "#imports";
+import { toast } from "vue-sonner";
 
 const route = useRoute();
 const id = route.params.id;
@@ -12,6 +13,46 @@ const relatedProducts = products.filter(
 
 // Default selected color (first one)
 const selectedColor = ref(product?.colors?.[0] || "");
+
+const selectedSize = ref(product?.sizes?.[0] || "");
+
+const cartStore = useCartStore();
+const addToCart = (product) => {
+  cartStore.addToCart(product, {
+    color: selectedColor.value,
+    size: selectedSize.value,
+  });
+  toast.success(`Product added to cart 🎉`, {
+    description: `${product.name} (${selectedColor.value}, ${selectedSize.value}) has been added to your cart.`,
+  });
+  console.log("product: ", product, "color:", selectedColor.value, "size:", selectedSize.value);
+}
+
+const newReview = ref("");
+const showReviewModal = ref(false);
+const reviewRating = ref(0);
+
+function submitReview() {
+  if (!newReview.value.trim()) return;
+  showReviewModal.value = true;
+}
+
+function confirmReview() {
+  if (!reviewRating.value) {
+    toast.error("Please select a rating.");
+    return;
+  }
+  // Here you would send the review and rating to your backend or update local state
+  toast.success("Review submitted!", { description: `${newReview.value} (Rating: ${reviewRating.value}★)` });
+  console.log("review: ", newReview.value, "rating:", reviewRating.value);
+  newReview.value = "";
+  reviewRating.value = 0;
+  showReviewModal.value = false;
+}
+
+function closeReviewModal() {
+  showReviewModal.value = false;
+}
 
 if (product) {
   useSeoMeta({
@@ -61,7 +102,10 @@ useHead({
           >
             ❤️
           </button>
+        
+          
         </div>
+        
 
         <div class="text-2xl font-semibold text-green-600">
           ${{ product.price.toFixed(2) }}
@@ -99,7 +143,8 @@ useHead({
           <span
             v-for="size in product.sizes"
             :key="size"
-            class="px-3 py-1 border border-gray-300 rounded-full text-sm text-gray-600"
+            :class="['px-3 py-1 border border-gray-300 rounded-full text-sm text-gray-600 cursor-pointer', selectedSize === size ? 'bg-gray-200' : '']"
+            @click="selectedSize = size"
           >
             {{ size }}
           </span>
@@ -109,9 +154,53 @@ useHead({
         <button
           :disabled="!product.inStock"
           class="bg-black text-white px-6 py-3 rounded-full hover:bg-gray-800 disabled:bg-gray-400 disabled:cursor-not-allowed transition"
+          @click="() => addToCart(product)"
         >
           Add to Cart
         </button>
+        <!-- Review Submission -->
+        <div class="mt-4 flex items-center gap-2">
+          <input
+            v-model="newReview"
+            type="text"
+            placeholder="Write a review..."
+            class="flex-1 border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary text-black dark:text-white bg-white dark:bg-gray-800"
+            @keyup.enter="submitReview"
+          />
+          <button
+            @click="submitReview"
+            class="bg-primary text-white rounded-full p-2 hover:bg-primary/90 transition flex items-center justify-center"
+            :disabled="!newReview.trim()"
+            aria-label="Submit Review"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 17l6-6m0 0l6-6m-6 6v12" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Review Modal -->
+        <div v-if="showReviewModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div class="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6 w-full max-w-xs relative">
+            <button @click="closeReviewModal" class="absolute top-2 right-2 text-gray-400 hover:text-red-500 text-xl">&times;</button>
+            <h3 class="text-lg font-semibold mb-4 text-center">Rate this product</h3>
+            <div class="flex justify-center mb-4">
+              <span
+                v-for="star in 5"
+                :key="star"
+                class="cursor-pointer text-3xl"
+                :class="reviewRating >= star ? 'text-yellow-400' : 'text-gray-300'"
+                @click="reviewRating = star"
+              >★</span>
+            </div>
+            <button
+              @click="confirmReview"
+              class="w-full bg-primary text-white py-2 rounded-full font-semibold hover:bg-primary/90 transition"
+            >
+              Submit Review
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
