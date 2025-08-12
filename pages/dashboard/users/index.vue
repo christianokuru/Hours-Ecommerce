@@ -23,6 +23,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import UserDashboardSidebarComponent from "~/components/custom/dashboard/UserDashboardSidebarComponent.vue";
+import DarkModeComponent from "@/components/custom/website/DarkModeComponent.vue";
 import { computed } from "vue";
 import { useCartStore } from "@/stores/cart";
 import { 
@@ -151,7 +152,7 @@ const wishlistItems = [
               <breadcrumb-list>
                 <breadcrumb-item class="hidden md:block">
                   <breadcrumb-link href="#" class="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors">
-                    Dashboard
+                    User Dashboard
                   </breadcrumb-link>
                 </breadcrumb-item>
                 <breadcrumb-separator class="hidden md:block text-slate-400" />
@@ -165,9 +166,14 @@ const wishlistItems = [
             
             <!-- User Greeting -->
             <div class="ml-auto hidden sm:flex items-center gap-3">
-              <div class="text-right">
+              <div class="flex items-center space-x-4 text-right">
+                <div>
+                  <dark-mode-component />
+                </div>
+               <div class="flex flex-col">
                 <p class="text-sm font-medium text-slate-900 dark:text-white">Welcome back!</p>
                 <p class="text-xs text-slate-500 dark:text-slate-400">Monday, Dec 12, 2024</p>
+               </div>
               </div>
               <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold">
                 JD
@@ -179,7 +185,7 @@ const wishlistItems = [
         <!-- Main Content -->
         <div class="flex-1 p-6 space-y-8">
           <!-- Quick Navigation Section -->
-          <div class="sticky top-16 z-40 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 rounded-2xl p-6 border border-blue-200/60 dark:border-blue-800/60">
+          <div class="sticky top-16 z-40 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 rounded-2xl p-6 border border-blue-200/60 dark:border-blue-800/60 dark:backdrop-blur-2xl">
             <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
               <div>
                 <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Ready to Shop?</h2>

@@ -96,11 +96,11 @@ const methodIcons: MethodIcons = {
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem class="hidden md:block">
-              <BreadcrumbLink href="#">Dashboard</BreadcrumbLink>
+              <BreadcrumbLink href="#">User Dashboard</BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator class="hidden md:block" />
             <BreadcrumbItem>
-              <BreadcrumbPage>Overview</BreadcrumbPage>
+              <BreadcrumbPage>Payment History</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
