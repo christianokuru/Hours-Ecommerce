@@ -22,6 +22,10 @@ import {
 } from '@/components/ui/sidebar'
 import UserDashboardSidebarComponent from '~/components/custom/dashboard/UserDashboardSidebarComponent.vue'
 
+definePageMeta({
+  layout: false
+})
+
 const orders = ref([
   {
     id: '#12345',

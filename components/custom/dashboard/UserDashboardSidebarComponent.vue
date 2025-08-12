@@ -1,6 +1,4 @@
 <script setup lang="ts">
-
-
 import {
   Settings2,
   ChartNoAxesCombined,
@@ -70,7 +68,6 @@ const data = {
 
 <template>
   <sidebar>
-    <div class="mt-[6rem]"></div>
     <sidebar-header>
       <team-switcher :teams="data.teams" />
     </sidebar-header>

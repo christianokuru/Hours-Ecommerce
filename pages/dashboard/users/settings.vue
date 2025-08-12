@@ -16,6 +16,10 @@ import {
 } from '@/components/ui/sidebar'
 import UserDashboardSidebarComponent from '~/components/custom/dashboard/UserDashboardSidebarComponent.vue'
 
+definePageMeta({
+  layout: false
+})
+
 const user = ref({
   name: 'John Doe',
   email: 'johndoe@email.com',
