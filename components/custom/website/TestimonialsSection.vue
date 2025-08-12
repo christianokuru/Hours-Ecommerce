@@ -40,10 +40,10 @@ const testimonials = [
 </script>
 
 <template>
-  <section class="py-16 px-6 lg:px-36 bg-gray-50">
+  <section class="py-16 px-6 lg:px-36 bg-gray-50 dark:bg-background">
     <div class="max-w-7xl mx-auto">
       <div class="text-center mb-12">
-        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 dark:text-foreground">
           What Our Community Says
         </h2>
         <p class="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -55,7 +55,7 @@ const testimonials = [
         <div
           v-for="testimonial in testimonials"
           :key="testimonial.id"
-          class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-shadow duration-300 relative"
+          class="bg-white dark:bg-card dark:border-accent dark:border-2 rounded-2xl p-8 shadow-sm hover:shadow-lg transition-shadow duration-300 relative"
         >
           <!-- Quote Icon -->
           <div class="absolute top-6 right-6 text-4xl text-gray-200">"</div>
@@ -85,7 +85,7 @@ const testimonials = [
                 {{ testimonial.avatar }}
               </div>
               <div>
-                <h4 class="font-semibold text-gray-900">{{ testimonial.name }}</h4>
+                <h4 class="font-semibold text-gray-900 dark:text-foreground">{{ testimonial.name }}</h4>
                 <p class="text-sm text-gray-500">{{ testimonial.role }}</p>
               </div>
             </div>

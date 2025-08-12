@@ -77,16 +77,16 @@ const features = [
           </div>
           
           <!-- Floating Stats -->
-          <div class="absolute -bottom-6 -left-6 bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20">
+          <div class="absolute -bottom-6 -left-6 bg-white/10 backdrop-blur-xl rounded-xl p-6 border border-white/20">
             <div class="flex items-center gap-4">
               <div class="text-center">
                 <div class="text-2xl font-bold text-white">5K+</div>
-                <div class="text-xs text-gray-400">Happy Customers</div>
+                <div class="text-xs text-foreground">Happy Customers</div>
               </div>
               <div class="w-px h-12 bg-white/20"></div>
               <div class="text-center">
                 <div class="text-2xl font-bold text-white">98%</div>
-                <div class="text-xs text-gray-400">Satisfaction Rate</div>
+                <div class="text-xs text-foreground">Satisfaction Rate</div>
               </div>
             </div>
           </div>

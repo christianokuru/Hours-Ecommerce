@@ -17,11 +17,11 @@ const addToCart = (product) => {
 </script>
 
 <template>
-  <section class="py-16 px-6 lg:px-36">
+  <section class="py-16 px-6 lg:px-36 dark:bg-background">
     <div class="max-w-7xl mx-auto">
       <div class="flex items-center justify-between mb-12">
         <div>
-          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 dark:text-foreground">
             Trending Now
           </h2>
           <p class="text-lg text-gray-600">

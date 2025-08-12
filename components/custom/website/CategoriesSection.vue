@@ -40,10 +40,10 @@ const categories = [
 </script>
 
 <template>
-  <section class="py-16 px-6 lg:px-36 bg-gray-50">
+  <section class="py-16 px-6 lg:px-36 bg-gray-50 dark:bg-background">
     <div class="max-w-7xl mx-auto">
       <div class="text-center mb-12">
-        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 dark:text-foreground">
           Shop by Category
         </h2>
         <p class="text-lg text-gray-600 max-w-2xl mx-auto">
