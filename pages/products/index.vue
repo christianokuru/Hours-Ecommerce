@@ -90,7 +90,7 @@ const clearFilters = () => {
   <div class="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
     <!-- Hero Section -->
     <section class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-      <div class="px-6 lg:px-36 py-16">
+      <div class="px-6 lg:px-36 py-16 mt-10">
         <div class="max-w-4xl mx-auto text-center">
           <h1 class="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
             Our Complete
